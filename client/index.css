@@ -1,0 +1,12 @@
+body {
+  background: #f5f5f5;
+  font: 300 16px/1.55 "Open Sans", sans-serif;
+}
+
+.header-title {
+  font-family: 'Pacifico', Georgia, Times, serif;
+  font-size: 59px;
+  line-height: 100px;
+  color: #eb9316;
+  margin-top: 0;
+}
