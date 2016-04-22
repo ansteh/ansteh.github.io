@@ -29,18 +29,15 @@
   };
 
   var query = queryString(location.href);
-  var defaultPackage = query.q || '';
+  var defaultPackage = query.q || 'shape-json';
 
   function requestDownloads(name){
     var url = 'https://api.npmjs.org/downloads/range/last-month/'+encodeURIComponent(name);
-    jQuery.getJSON(url)
+    return jQuery.getJSON(url)
       .success(function(response){
         if(response.downloads){
           plot(response);
         }
-      })
-      .fail(function(err) {
-
       });
   };
 
@@ -59,14 +56,31 @@
   };
 
   jQuery(document).ready(function(){
-    //requestDownloads(defaultPackage);
-    requestDownloads('shape-json');
+    message(defaultPackage);
+    requestDownloads(defaultPackage);
     var input = jQuery('#package-needle');
+    input.focus();
+
+    function message(name){
+      var npmLink = 'https://www.npmjs.com/package/'+name;
+      var backLink = location.origin+'/?q='+name;
+      jQuery('#package-message').html('<a href="'+npmLink+'">'+name+'</a> wants to be remembered <a href="'+backLink+'">'+backLink+'</a>!');
+    };
+
     input.keyup(function(event){
       var code = event.keyCode || event.which;
       if(code == 13) {
-         //console.log('enter', input.val());
-         requestDownloads(input.val());
+        var name = input.val();
+        requestDownloads(name)
+        .then(function(response){
+          if(response.package){
+            console.log(response.package);
+            message(response.package);
+          }
+        })
+        .fail(function(err) {
+
+        });
       }
     });
 

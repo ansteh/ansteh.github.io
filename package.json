@@ -1,0 +1,32 @@
+{
+  "name": "ansteh.github.io",
+  "version": "1.0.3",
+  "description": "util module for json object transformations",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "gulp": "gulp"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ansteh/ansteh.github.io.git"
+  },
+  "keywords": [
+    "Andre Stehle",
+    "andre",
+    "stehle",
+    "ansteh"
+  ],
+  "author": "Andre Stehle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ansteh/ansteh.github.io/issues"
+  },
+  "dependencies": {
+    "express": "^4.13.4"
+  },
+  "devDependencies": {}
+}
