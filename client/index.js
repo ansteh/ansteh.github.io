@@ -45,7 +45,7 @@
     var data = info.downloads;
     MG.convert.date(data, 'day', '%Y-%m-%d');
     MG.data_graphic({
-      title: info.package,
+      //title: info.package,
       description: "dowloads of last month",
       data: data,
       full_width: true,
@@ -57,7 +57,13 @@
 
   jQuery(document).ready(function(){
     message(defaultPackage);
-    requestDownloads(defaultPackage);
+    requestDownloads(defaultPackage)
+    .then(function(response){
+      if(response.package){
+        showTotalDownloads(response);
+      }
+    });
+
     var input = jQuery('#package-needle');
     input.focus();
 
@@ -65,6 +71,15 @@
       var npmLink = 'https://www.npmjs.com/package/'+name;
       var backLink = location.origin+'/?q='+name;
       jQuery('#package-message').html('<a href="'+npmLink+'">'+name+'</a> wants to be remembered <a href="'+backLink+'">'+backLink+'</a>!');
+    };
+
+    function showTotalDownloads(response){
+      if(response.downloads){
+        var downloads = response.downloads.reduce(function(sum, day){
+          return sum + day.downloads;
+        }, 0);
+        jQuery('#package-total-downloads').html('<bold>'+downloads+'</bold> downloads in the last month');
+      }
     };
 
     input.keyup(function(event){
@@ -76,6 +91,7 @@
           if(response.package){
             console.log(response.package);
             message(response.package);
+            showTotalDownloads(response);
           }
         })
         .fail(function(err) {
