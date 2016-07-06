@@ -1,0 +1,14 @@
+{
+  "name": "icon-toggle",
+  "version": "0.0.0",
+  "homepage": "http://ansteh.github.io/",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "polymer": "~1.6.0"
+  }
+}
