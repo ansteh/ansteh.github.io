@@ -5,6 +5,7 @@ const app            = express();
 const path           = require('path');
 
 app.use('/client', express.static(path.join(__dirname, '/client')));
+app.use('/roi', express.static(path.join(__dirname, '/roi')));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
