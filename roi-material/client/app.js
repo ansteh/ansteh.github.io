@@ -120,7 +120,7 @@
   app.directive('test', function(Quandl){
     return {
       restrict: 'E',
-      templateUrl: '/client/stock.tpl.html',
+      templateUrl: 'client/stock.tpl.html',
       scope: { name: "=" },
       controller: function($scope, $element) {
         var stock;
