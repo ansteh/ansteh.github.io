@@ -1,25 +1,64 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.9.0/metricsgraphics.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.9.0/metricsgraphics.min.js"></script>
+
+<script src="../shared/chart.js"></script>
+<script src="../shared/stock.js"></script>
 
 <dom-module id="roi-stock">
-
 
   <template>
 
     <style>
       /* local DOM styles go here */
       :host {
-        display: inline-block;
+        width: 100%;
       }
     </style>
 
     <!-- local DOM goes here -->
-    <span>stock</span>
+    <!--<iron-ajax auto url="https://www.quandl.com/api/v3/datasets/WIKI/{{ company }}.json" handle-as="json" last-response="{{ ajaxResponse }}"></iron-ajax>-->
+    <iron-ajax auto url="/resources/{{ company }}.json" handle-as="json" last-response="{{ ajaxResponse }}"></iron-ajax>
+    <h1>[[ajaxResponse.dataset.name]]</h1>
+    <div id="stock" style="width: 100%; height-min: 100px;"></div>
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+      <div class="md-headline" flex style="text-align: center;">{{ amount }} shares</div>
+      <div class="md-headline" flex style="text-align: center;">Cash: {{ cash }} $</div>
+      <div class="md-headline" flex style="text-align: center;">ROI: {{ roi }} %</div>
+    </section>
   </template>
 
   <script>
+
     Polymer({
       is: 'roi-stock',
+      properties: {
+        company: String,
+        ajaxResponse: {
+          type: Object,
+          notify: true,
+          observer: 'update'
+        }
+      },
+      attached: function() {
+        console.log('company attached!');
+        //this.update();
+      },
+      stock: undefined,
+      investment: 1000,
+      update: function() {
+        console.log(this.ajaxResponse);
+        this.stock = Stock(this.ajaxResponse);
+        Graphics.stock(this.$.stock, this.stock);
+        this.amount = this.stock.getAmount(this.investment);
+        this.cash = this.stock.getCash(this.investment);
+        this.roi = _.round(this.stock.getROI(this.investment), 2);
+      }
     });
+
   </script>
 
 </dom-module>

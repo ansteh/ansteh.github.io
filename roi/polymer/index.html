@@ -1,16 +1,25 @@
 <!doctype html>
 <html>
   <head>
+    <title>ROI - polymer</title>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.9/angular-material.min.css">
+
     <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-    <script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.4.1/bluebird.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <!--<script>
 
       window.Polymer = window.Polymer || {};
       window.Polymer.dom = 'shadow';
 
-    </script>
+    </script>-->
     <link rel="import" href="stock.html">
   </head>
   <body>
-    <roi-stock></roi-stock>
+    <div style="width: 650px; margin: auto;">
+      <roi-stock company="FB"></roi-stock>
+    </div>
   </body>
 </html>

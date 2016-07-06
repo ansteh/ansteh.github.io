@@ -9,6 +9,7 @@
     "bower_components"
   ],
   "dependencies": {
+    "iron-ajax": "~1.2.1",
     "polymer": "~1.6.0"
   }
 }
