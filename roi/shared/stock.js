@@ -10,6 +10,16 @@ var Stock = function(info) {
     }
   });
 
+  var getStart = function() {
+    var start = _.get(_.first(series), '0');
+    return moment(start,'YYYY-MM-DD').toDate();
+  };
+
+  var getEnd = function() {
+    var end = _.get(_.last(series), '0');
+    return moment(end,'YYYY-MM-DD').toDate();
+  };
+
   var maxDiff = function() {
     var memory = {};
     var maxDiff = -1;
@@ -58,6 +68,8 @@ var Stock = function(info) {
     },
     getName: function() {
       return _.get(info, 'dataset.name');
-    }
+    },
+    getEnd: getEnd,
+    getStart: getStart
   };
 };
