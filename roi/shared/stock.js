@@ -10,6 +10,10 @@ var Stock = function(info) {
     }
   });
 
+  var access = function(point) {
+    return point.date;
+  };
+
   var getStart = function() {
     var start = _.get(_.first(series), '0');
     return moment(start,'YYYY-MM-DD').toDate();
@@ -52,6 +56,14 @@ var Stock = function(info) {
   function getAmount(investment) {
     return _.round(investment/optimum.min.close)
   };
+
+  function compress(delimiter) {
+    return DP.groupBy(data, delimiter, access);
+  };
+
+  console.log(DP.increment(new Date(), 'month'));
+  console.log(DP.delimit(new Date(), moment().add(5, 'month').toDate(), 'month'));
+  console.log(DP.batch(data, 'month', access));
 
   return {
     data: data,
