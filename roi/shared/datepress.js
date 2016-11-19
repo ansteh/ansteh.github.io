@@ -85,3 +85,18 @@ DP.batch = function(collection, delimiter, access) {
     return pool;
   }, []);
 };
+
+DP.findIndex = function(collection, date, acces) {
+  if(_.isUndefined(access)) {
+    access = function(x) { return x };
+  }
+
+  return _.findIndex(collection, function(item) {
+    return date === acces(item);
+  });
+};
+
+DP.slice = function(collection, start, end, access) {
+  var startIndex = DP.findIndex(collection, start, access);
+  var endIndex = DP.findIndex(collection, end, access);
+};

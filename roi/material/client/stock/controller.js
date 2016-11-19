@@ -4,8 +4,14 @@ app.controller('StockCtrl', function($scope, $element, Quandl) {
   $scope.company = _.first($scope.companies);
   $scope.optimum;
   $scope.investment = 1000;
+
   $scope.start = new Date();
   $scope.end = new Date();
+
+  $scope.boundries = {
+    start: _.clone($scope.start),
+    end: _.clone($scope.end)
+  };
 
   $scope.getROI = function() {
     if(stock) {
@@ -37,8 +43,15 @@ app.controller('StockCtrl', function($scope, $element, Quandl) {
       stock = Stock(response);
       Graphics.stock($element.find('#stock')[0], stock);
       $scope.optimum = stock.getOptimum();
+
       $scope.start = stock.getStart();
       $scope.end = stock.getEnd();
+
+      $scope.boundries = {
+        start: moment(_.clone($scope.start)).add(1, 'month').toDate(),
+        end: _.clone($scope.end)
+      };
+
       $scope.$apply();
     })
     .catch(function(err) {

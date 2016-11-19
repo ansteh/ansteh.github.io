@@ -10,43 +10,24 @@ var Stock = function(info) {
     }
   });
 
+  // console.log(data);
+
   var access = function(point) {
     return point.date;
   };
 
   var getStart = function() {
     var start = _.get(_.first(series), '0');
-    return moment(start,'YYYY-MM-DD').toDate();
+    return moment(start,'YYYY-MM-DD').startOf('day').toDate();
   };
 
   var getEnd = function() {
     var end = _.get(_.last(series), '0');
-    return moment(end,'YYYY-MM-DD').toDate();
+    return moment(end,'YYYY-MM-DD').endOf('day').toDate();
   };
 
-  var maxDiff = function() {
-    var memory = {};
-    var maxDiff = -1;
-    var maxRight = _.last(data);
-    memory.max = maxRight;
-    for (var i = data.length-2; i >= 0; i--) {
-      if (data[i].close > maxRight.close) {
-        maxRight = data[i];
-        memory.max = maxRight;
-      } else {
-        var diff = maxRight.close - data[i].close;
-        if (diff > maxDiff) {
-          memory.min = data[i];
-          maxDiff = diff;
-        }
-      }
-    }
-    memory.maxDiff = maxDiff;
-    return memory;
-  }
-
   var getOptimum = function() {
-    return maxDiff();
+    return maxDiff(data);
   };
 
   var optimum = getOptimum();
@@ -61,12 +42,17 @@ var Stock = function(info) {
     return DP.groupBy(data, delimiter, access);
   };
 
-  console.log(DP.increment(new Date(), 'month'));
-  console.log(DP.delimit(new Date(), moment().add(5, 'month').toDate(), 'month'));
-  console.log(DP.batch(data, 'month', access));
+  // console.log(DP.increment(new Date(), 'month'));
+  // console.log(DP.delimit(new Date(), moment().add(5, 'month').toDate(), 'month'));
+  // console.log(DP.batch(data, 'month', access));
+
+  // function filter(start, end) {
+  //   return
+  // };
 
   return {
     data: data,
+    // filter: filter,
     getOptimum: function() {
       return optimum;
     },
