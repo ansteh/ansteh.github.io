@@ -1,5 +1,5 @@
 app.controller('StockCtrl', function($scope, $element, Quandl) {
-  var stock;
+  var stock, chart;
   $scope.companies = ['FB', 'GOOG', 'MSFT'];
   $scope.company = _.first($scope.companies);
   $scope.optimum;
@@ -37,18 +37,31 @@ app.controller('StockCtrl', function($scope, $element, Quandl) {
     }
   };
 
+  $scope.getDuration = function() {
+    if($scope.optimum) {
+      return moment($scope.optimum.max.date).diff(moment($scope.optimum.min.date), 'days');
+    }
+    return 0;
+  };
+
+  $scope.filter = function() {
+    chart.plot($scope.boundries.start, $scope.boundries.end);
+    $scope.optimum = stock.getOptimum();
+  };
+
   $scope.update = function() {
     Quandl.get($scope.company)
     .then(function(response) {
       stock = Stock(response);
-      Graphics.stock($element.find('#stock')[0], stock);
+      chart = Graphics.stock($element.find('#stock')[0], stock);
+      chart.plot();
       $scope.optimum = stock.getOptimum();
 
       $scope.start = stock.getStart();
       $scope.end = stock.getEnd();
 
       $scope.boundries = {
-        start: moment(_.clone($scope.start)).add(1, 'month').toDate(),
+        start: _.clone($scope.start),
         end: _.clone($scope.end)
       };
 

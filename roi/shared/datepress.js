@@ -86,17 +86,18 @@ DP.batch = function(collection, delimiter, access) {
   }, []);
 };
 
-DP.findIndex = function(collection, date, acces) {
+DP.findIndex = function(collection, date, access) {
   if(_.isUndefined(access)) {
     access = function(x) { return x };
   }
-
+  var mark = moment(_.clone(date));
   return _.findIndex(collection, function(item) {
-    return date === acces(item);
+    return moment(access(item)).isSameOrAfter(mark);
   });
 };
 
 DP.slice = function(collection, start, end, access) {
   var startIndex = DP.findIndex(collection, start, access);
   var endIndex = DP.findIndex(collection, end, access);
+  return _.slice(collection, startIndex, endIndex);
 };

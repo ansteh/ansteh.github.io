@@ -1,3 +1,6 @@
+<h1 class="md-title" style="text-align: center;">{{ getName() }}</h1>
+<div id="stock" style="width: 100%; height-min: 100px;"></div>
+
 <section layout="row" layout-sm="column" layout-align="center" layout-wrap>
   <md-input-container class="md-block" flex>
     <label>Company</label>
@@ -7,14 +10,46 @@
       </md-option>
     </md-select>
   </md-input-container>
+</section>
+
+<div ng-cloak>
+  <md-content layout-padding>
+    <div layout-gt-xs="row" layout-align="center center">
+      <div flex-gt-xs>
+        <h4>Start</h4>
+        <md-datepicker datepicker-validation-fix
+          ng-model="boundries.start"
+          md-min-date="start"
+          md-max-date="end"
+          md-placeholder="Enter date"
+          ng-change="filter()">
+        </md-datepicker>
+      </div>
+      <div flex-gt-xs>
+        <h4>End</h4>
+        <md-datepicker datepicker-validation-fix
+          ng-model="boundries.end"
+          md-min-date="start"
+          md-max-date="end"
+          md-placeholder="Enter date"
+          ng-change="filter()">
+        </md-datepicker>
+      </div>
+    </div>
+  </md-content>
+</div>
+
+<section layout="row" layout-sm="column" layout-align="center" layout-wrap>
   <md-input-container class="md-block" flex>
     <label>Investment</label>
     <input type="number" ng-model="investment">
   </md-input-container>
-</section>
 
-<h1 class="md-title" style="text-align: center;">{{ getName() }}</h1>
-<div id="stock" style="width: 100%; height-min: 100px;"></div>
+  <md-input-container class="md-block" flex>
+    <label>Duration (Days)</label>
+    <input type="number" ng-value="getDuration()" disabled>
+  </md-input-container>
+</section>
 
 <md-content class="md-padding">
   <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
@@ -23,19 +58,3 @@
     <div class="md-headline" flex style="text-align: center;">ROI: {{ getROI() | number:2 }} %</div>
   </section>
 </md-content>
-
-<div ng-cloak>
-  <md-content layout-padding>
-    <div layout-gt-xs="row" layout-align="center center">
-      <div flex-gt-xs>
-        <h4>Start</h4>
-        <md-datepicker datepicker-validation-fix ng-model="boundries.start" md-min-date="start" md-max-date="end" md-placeholder="Enter date"></md-datepicker>
-      </div>
-      <div flex-gt-xs>
-        <h4>End</h4>
-        <md-datepicker datepicker-validation-fix ng-model="boundries.end" md-min-date="start" md-max-date="end" md-placeholder="Enter date"></md-datepicker>
-      </div>
-    </div>
-  </md-content>
-</div>
-<!--<pre>{{ optimum | json }}</pre>-->
