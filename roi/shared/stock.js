@@ -23,16 +23,12 @@ var Stock = function(info) {
     optimum = maxDiff(filteredData);
     _.set(optimum, 'min.label', 'BUY: '+_.get(optimum, 'min.close'));
     _.set(optimum, 'max.label', 'SELL: '+_.get(optimum, 'max.close'));
-    console.log('setOptimum', optimum.max);
+    // console.log('setOptimum', optimum.max);
     return optimum;
   };
 
   function getAmount(investment) {
     return _.round(investment/optimum.min.close)
-  };
-
-  function compress(delimiter) {
-    return DP.groupBy(filteredData, delimiter, access);
   };
 
   // console.log(DP.increment(new Date(), 'month'));
@@ -57,6 +53,7 @@ var Stock = function(info) {
   return {
     data: data,
     filteredData: filteredData,
+    access: access,
     getOptimum: function() {
       return optimum;
     },
