@@ -31,7 +31,6 @@ var Stock = function(info) {
     return _.round(investment/optimum.min.close)
   };
 
-<<<<<<< HEAD
   function compress(delimiter) {
     return DP.groupBy(filteredData, delimiter, access);
   };
@@ -61,11 +60,6 @@ var Stock = function(info) {
       yearly: currentValue/totalInvestment/transactions.length*12
     };
   };
-=======
-  // console.log(DP.increment(new Date(), 'month'));
-  // console.log(DP.delimit(new Date(), moment().add(5, 'month').toDate(), 'month'));
-  // console.log(DP.batch(data, 'month', access));
->>>>>>> 6ad8004766113e3941fd14c31c45dbc34751b956
 
   var series = _.chain(_.get(info, 'dataset.data', []))
     .reverse()
@@ -96,7 +90,7 @@ var Stock = function(info) {
     filter: filter,
     getAmount: getAmount,
     getROI: function(investment) {
-      console.log(everageCost(data, 'month', 20000));
+      console.log(everageCost(data, 'month', 2000));
       var amount = getAmount(investment);
       return (amount*(optimum.max.close-optimum.min.close))/(amount*optimum.min.close) * 100;
     },
