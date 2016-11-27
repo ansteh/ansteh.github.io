@@ -23,7 +23,7 @@ var Stock = function(info) {
     optimum = maxDiff(filteredData);
     _.set(optimum, 'min.label', 'BUY: '+_.get(optimum, 'min.close'));
     _.set(optimum, 'max.label', 'SELL: '+_.get(optimum, 'max.close'));
-    console.log('setOptimum', optimum.max);
+    // console.log('setOptimum', optimum.max);
     return optimum;
   };
 
@@ -31,6 +31,7 @@ var Stock = function(info) {
     return _.round(investment/optimum.min.close)
   };
 
+<<<<<<< HEAD
   function compress(delimiter) {
     return DP.groupBy(filteredData, delimiter, access);
   };
@@ -60,6 +61,11 @@ var Stock = function(info) {
       yearly: currentValue/totalInvestment/transactions.length*12
     };
   };
+=======
+  // console.log(DP.increment(new Date(), 'month'));
+  // console.log(DP.delimit(new Date(), moment().add(5, 'month').toDate(), 'month'));
+  // console.log(DP.batch(data, 'month', access));
+>>>>>>> 6ad8004766113e3941fd14c31c45dbc34751b956
 
   var series = _.chain(_.get(info, 'dataset.data', []))
     .reverse()
@@ -83,6 +89,7 @@ var Stock = function(info) {
   return {
     data: data,
     filteredData: filteredData,
+    access: access,
     getOptimum: function() {
       return optimum;
     },
