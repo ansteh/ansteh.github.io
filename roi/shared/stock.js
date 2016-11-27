@@ -35,9 +35,31 @@ var Stock = function(info) {
     return DP.groupBy(filteredData, delimiter, access);
   };
 
-  // console.log(DP.increment(new Date(), 'month'));
-  // console.log(DP.delimit(new Date(), moment().add(5, 'month').toDate(), 'month'));
-  // console.log(DP.batch(data, 'month', access));
+  function everageCost(data, delimiter, investment) {
+    var batches = DP.batch(data, delimiter, access);
+    var transactions = _.map(batches, function(batch) {
+      var state = _.last(batch);
+      if(!state) return {};
+      return _.assign({}, state, {
+        shares: _.floor(investment/state.close)
+      });
+    });
+
+    var last = _.last(transactions);
+    var totaleShares = _.sumBy(transactions, function(transaction) {
+      return transaction.shares;
+    });
+    var totalInvestment = transactions.length*investment;
+    var currentValue = last.close*totaleShares;
+    return {
+      transactions: transactions,
+      shares: totaleShares,
+      totalInvestment: totalInvestment,
+      currentValue: currentValue,
+      growth: currentValue/totalInvestment,
+      yearly: currentValue/totalInvestment/transactions.length*12
+    };
+  };
 
   var series = _.chain(_.get(info, 'dataset.data', []))
     .reverse()
@@ -54,6 +76,10 @@ var Stock = function(info) {
   var optimum = setOptimum();
   // console.log(data);
 
+  // console.log(DP.increment(new Date(), 'month'));
+  // console.log(DP.delimit(new Date(), moment().add(5, 'month').toDate(), 'month'));
+  // console.log(DP.batch(data, 'month', access));
+
   return {
     data: data,
     filteredData: filteredData,
@@ -63,6 +89,7 @@ var Stock = function(info) {
     filter: filter,
     getAmount: getAmount,
     getROI: function(investment) {
+      console.log(everageCost(data, 'month', 20000));
       var amount = getAmount(investment);
       return (amount*(optimum.max.close-optimum.min.close))/(amount*optimum.min.close) * 100;
     },
