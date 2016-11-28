@@ -37,6 +37,7 @@ var Stock = function(info) {
 
   function everageCost(data, delimiter, investment) {
     var batches = DP.batch(data, delimiter, access);
+    // batches = _.slice(batches, -32);
     var transactions = _.map(batches, function(batch) {
       var state = _.last(batch);
       if(!state) return {};
@@ -51,13 +52,15 @@ var Stock = function(info) {
     });
     var totalInvestment = transactions.length*investment;
     var currentValue = last.close*totaleShares;
+    var rate = Math.pow(currentValue/investment, 1/transactions.length)-1;
     return {
       transactions: transactions,
       shares: totaleShares,
       totalInvestment: totalInvestment,
       currentValue: currentValue,
       growth: currentValue/totalInvestment,
-      yearly: currentValue/totalInvestment/transactions.length*12
+      rate: rate,
+      value: investment*Math.pow(1 + rate, transactions.length)
     };
   };
 
@@ -90,7 +93,7 @@ var Stock = function(info) {
     filter: filter,
     getAmount: getAmount,
     getROI: function(investment) {
-      console.log(everageCost(data, 'month', 2000));
+      console.log(everageCost(data, 'month', 500));
       var amount = getAmount(investment);
       return (amount*(optimum.max.close-optimum.min.close))/(amount*optimum.min.close) * 100;
     },
