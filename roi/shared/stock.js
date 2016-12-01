@@ -32,17 +32,22 @@ var Stock = function(info) {
   };
 
   function compress(delimiter) {
-    return DP.groupBy(filteredData, delimiter, access);
+    var data = DP.batch(_.cloneDeep(filteredData), delimiter, access);
+    return _.map(data, function(batch) {
+      return _.last(batch);
+    });
   };
 
-  function everageCost(data, delimiter, investment) {
+  function everageCost(data, delimiter, investment, transactionCost) {
     var batches = DP.batch(data, delimiter, access);
-    // batches = _.slice(batches, -32);
+
     var transactions = _.map(batches, function(batch) {
       var state = _.last(batch);
       if(!state) return {};
+      var shares = _.floor(investment/state.close);
       return _.assign({}, state, {
-        shares: _.floor(investment/state.close)
+        shares: shares,
+        investment: shares*state.close
       });
     });
 
@@ -50,17 +55,20 @@ var Stock = function(info) {
     var totaleShares = _.sumBy(transactions, function(transaction) {
       return transaction.shares;
     });
-    var totalInvestment = transactions.length*investment;
+    var totalInvestment = _.sumBy(transactions, function(transaction) {
+      return transaction.investment;
+    });
     var currentValue = last.close*totaleShares;
     var rate = Math.pow(currentValue/investment, 1/transactions.length)-1;
+
     return {
-      transactions: transactions,
+      delimiter: delimiter,
       shares: totaleShares,
-      totalInvestment: totalInvestment,
       currentValue: currentValue,
+      totalInvestment: totalInvestment,
       growth: currentValue/totalInvestment,
       rate: rate,
-      value: investment*Math.pow(1 + rate, transactions.length)
+      transactions: transactions,
     };
   };
 
@@ -87,13 +95,18 @@ var Stock = function(info) {
     data: data,
     filteredData: filteredData,
     access: access,
+    filter: filter,
+    compress: compress,
+    getAmount: getAmount,
+    getEnd: getEnd,
+    getStart: getStart,
     getOptimum: function() {
       return optimum;
     },
-    filter: filter,
-    getAmount: getAmount,
+    everageCost: function(delimiter, investment) {
+      return everageCost(filteredData, delimiter, investment);
+    },
     getROI: function(investment) {
-      console.log(everageCost(data, 'month', 500));
       var amount = getAmount(investment);
       return (amount*(optimum.max.close-optimum.min.close))/(amount*optimum.min.close) * 100;
     },
@@ -102,8 +115,6 @@ var Stock = function(info) {
     },
     getName: function() {
       return _.get(info, 'dataset.name');
-    },
-    getEnd: getEnd,
-    getStart: getStart
+    }
   };
 };

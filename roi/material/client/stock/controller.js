@@ -45,8 +45,14 @@ app.controller('StockCtrl', function($scope, $element, Quandl) {
   };
 
   $scope.filter = function() {
-    chart.plot($scope.boundries.start, $scope.boundries.end);
+    chart.plot($scope.boundries.start, $scope.boundries.end, 'month');
     $scope.optimum = stock.getOptimum();
+  };
+
+  $scope.everageCost = function(delimiter) {
+    if(stock) {
+      return stock.everageCost(delimiter, $scope.investment);
+    }
   };
 
   $scope.update = function() {
@@ -55,6 +61,8 @@ app.controller('StockCtrl', function($scope, $element, Quandl) {
       stock = Stock(response);
       chart = Graphics.stock($element.find('#stock')[0], stock);
       chart.plot();
+      // chart.batch('month');
+
       $scope.optimum = stock.getOptimum();
 
       $scope.start = stock.getStart();

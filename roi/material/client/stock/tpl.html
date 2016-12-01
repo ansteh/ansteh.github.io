@@ -1,5 +1,6 @@
 <h1 class="md-title" style="text-align: center;">{{ getName() }}</h1>
 <div id="stock" style="width: 100%; height-min: 100px;"></div>
+<div id="batched" style="width: 100%; height-min: 100px;"></div>
 
 <section layout="row" layout-sm="column" layout-align="center" layout-wrap>
   <md-input-container class="md-block" flex>
@@ -51,10 +52,12 @@
   </md-input-container>
 </section>
 
-<md-content class="md-padding">
+<!-- <md-content class="md-padding">
   <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
     <div class="md-headline" flex style="text-align: center;">{{ amount() | number:0 }} shares</div>
     <div class="md-headline" flex style="text-align: center;">{{ cash() | number:2 }} $</div>
     <div class="md-headline" flex style="text-align: center;">ROI: {{ getROI() | number:2 }} %</div>
   </section>
-</md-content>
+</md-content> -->
+
+<pre>{{ everageCost('month') | json }}</pre>
