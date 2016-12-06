@@ -4,6 +4,7 @@ app.controller('StockCtrl', function($scope, $element, Quandl) {
   $scope.company = _.first($scope.companies);
   $scope.optimum;
   $scope.investment = 1000;
+  $scope.cost;
 
   $scope.start = new Date();
   $scope.end = new Date();
@@ -73,6 +74,7 @@ app.controller('StockCtrl', function($scope, $element, Quandl) {
         end: _.clone($scope.end)
       };
 
+      $scope.cost = $scope.everageCost('month');
       $scope.$apply();
     })
     .catch(function(err) {

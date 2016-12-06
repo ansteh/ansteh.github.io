@@ -14,7 +14,9 @@ var Stock = function(info) {
   };
 
   function filter(start, end) {
-    filteredData = DP.slice(data, start, end, access);
+    if(start && end) {
+      filteredData = DP.slice(data, start, end, access);
+    }
     setOptimum();
     return filteredData;
   };
@@ -38,38 +40,17 @@ var Stock = function(info) {
     });
   };
 
-  function everageCost(data, delimiter, investment, transactionCost) {
+  function getPrice(point) {
+    return point.close;
+  };
+
+  var costEverage = Cost.everage(getPrice);
+
+  function everageCost(data, delimiter, investment) {
     var batches = DP.batch(data, delimiter, access);
-
-    var transactions = _.map(batches, function(batch) {
-      var state = _.last(batch);
-      if(!state) return {};
-      var shares = _.floor(investment/state.close);
-      return _.assign({}, state, {
-        shares: shares,
-        investment: shares*state.close
-      });
-    });
-
-    var last = _.last(transactions);
-    var totaleShares = _.sumBy(transactions, function(transaction) {
-      return transaction.shares;
-    });
-    var totalInvestment = _.sumBy(transactions, function(transaction) {
-      return transaction.investment;
-    });
-    var currentValue = last.close*totaleShares;
-    var rate = Math.pow(currentValue/investment, 1/transactions.length)-1;
-
-    return {
-      delimiter: delimiter,
-      shares: totaleShares,
-      currentValue: currentValue,
-      totalInvestment: totalInvestment,
-      growth: currentValue/totalInvestment,
-      rate: rate,
-      transactions: transactions,
-    };
+    var info = costEverage(batches, investment);
+    info.delimiter = delimiter;
+    return info
   };
 
   var series = _.chain(_.get(info, 'dataset.data', []))
@@ -83,18 +64,21 @@ var Stock = function(info) {
     }
   });
 
+
   var filteredData = data;
+
+  //test
+  data = compress('week');
+  filteredData = data;
+
   var optimum = setOptimum();
   // console.log(data);
 
   // console.log(DP.increment(new Date(), 'month'));
   // console.log(DP.delimit(new Date(), moment().add(5, 'month').toDate(), 'month'));
   // console.log(DP.batch(data, 'month', access));
-
+  
   return {
-    data: data,
-    filteredData: filteredData,
-    access: access,
     filter: filter,
     compress: compress,
     getAmount: getAmount,

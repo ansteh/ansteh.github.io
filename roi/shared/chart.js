@@ -3,12 +3,7 @@ var Graphics = {};
 Graphics.stock = function(anchor, stock){
 
   var plot = function(start, end, delimiter) {
-    var data;
-    if(start) {
-      data = stock.filter(start, end);
-    } else {
-      data = stock.filteredData;
-    }
+    var data = stock.filter(start, end);
 
     var markers = [];
     var optimum = stock.getOptimum();
@@ -21,7 +16,7 @@ Graphics.stock = function(anchor, stock){
     }).close;
 
     MG.data_graphic({
-      // data: [data, stock.compress('month')],
+      // data: [data, stock.compress('month'), stock.compress('year')],
       data: data,
       animate_on_load: true,
       y_scale_type: 'log',
@@ -35,16 +30,38 @@ Graphics.stock = function(anchor, stock){
     });
   };
 
-  // var batch = function(delimiter) {
-  //   MG.data_graphic({
-  //     data: stock.compress('month'),
-  //     area: false,
-  //     full_width: true,
-  //     target: document.getElementById('batched'),
-  //     x_accessor: 'date',
-  //     y_accessor: 'close'
-  //   });
-  // }
+  return {
+    plot: plot
+  };
+};
+
+Graphics.everageCost = function(anchor) {
+
+  function plot(info) {
+    MG.data_graphic({
+      data: info.transactions,
+      animate_on_load: true,
+      y_scale_type: 'log',
+      area: false,
+      full_width: true,
+      target: anchor,
+      x_accessor: 'date',
+      y_accessor: 'close'
+    });
+    // MG.data_graphic({
+    //   data: info.transactions,
+    //   chart_type: 'histogram',
+    //   width: 600,
+    //   height: 300,
+    //   right: 40,
+    //   bar_margin: 0,
+    //   bins: 150,
+    //   target: anchor,
+    //   y_extended_ticks: true,
+    //   x_accessor: 'date',
+    //   y_accessor: 'investment'
+    // });
+  };
 
   return {
     plot: plot
