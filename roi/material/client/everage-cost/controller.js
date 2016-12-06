@@ -6,7 +6,6 @@ app.controller('EverageCostCtrl', function($scope, $element) {
     return _.get($scope.info, 'transactions.length');
   }, function() {
     if(_.has($scope.info, 'transactions.length')) {
-      console.log('test');
       chart.plot($scope.info);
     }
   });
