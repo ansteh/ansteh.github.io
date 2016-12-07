@@ -71,13 +71,15 @@ var Stock = function(info) {
   data = compress('week');
   filteredData = data;
 
+  // console.log(Detection(peakFunction, { h: 1.1 , k: 2 }, getPrice, filteredData));
+
   var optimum = setOptimum();
   // console.log(data);
 
   // console.log(DP.increment(new Date(), 'month'));
   // console.log(DP.delimit(new Date(), moment().add(5, 'month').toDate(), 'month'));
   // console.log(DP.batch(data, 'month', access));
-  
+
   return {
     filter: filter,
     compress: compress,
