@@ -10,6 +10,16 @@ Graphics.stock = function(anchor, stock){
     if(_.has(optimum, 'min')) markers.push(optimum.min);
     if(_.has(optimum, 'max')) markers.push(optimum.max);
 
+    var indices = Interior.findAllPeaks(_.map(data, 'close'));
+    var points = _.map(indices, function(index) {
+      return data[index];
+    });
+    _.forEach(points, function(point) {
+      _.assign(point, { label: '' });
+      markers.push(point);
+    });
+    // console.log(markers);
+
     // console.log('markers', _.last(markers));
     var min_y = _.minBy(data, function(item) {
       return item.close;

@@ -72,6 +72,7 @@ var Stock = function(info) {
   filteredData = data;
 
   // console.log(Detection(peakFunction, { h: 1.1 , k: 2 }, getPrice, filteredData));
+  // console.log(Interior.findAllPeaks(_.map(filteredData, 'close')));
 
   var optimum = setOptimum();
   // console.log(data);
