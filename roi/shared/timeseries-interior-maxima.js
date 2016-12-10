@@ -31,7 +31,6 @@ var Interior = (function() {
     series.unshift(min);
     series.push(min);
     var difSign = sign(dif(series));
-    console.log(difSign);
     return _.reduce(difSign, function(collector, value, index) {
       if(_.includes(diffs, value)) {
         collector.push(index);
@@ -40,7 +39,27 @@ var Interior = (function() {
     }, []);
   });
 
+  var findAllPeaksByCompare = function(series) {
+    return _.reduce(series, function(indices, value, index) {
+      if(index === 0) {
+        if(index+1 < series.length && value > series[index+1]) {
+          indices.push(index);
+        }
+      }
+      if(index === series.length-1) {
+        if(index-1 > -1 && series[index-1] > value) {
+          indices.push(index);
+        }
+      }
+      if(series[index-1] < value > series[index+1]) {
+        indices.push(index);
+      }
+      return indices;
+    }, []);
+  };
+
   return {
+    // findAllPeaks: findAllPeaksByCompare,
     findAllPeaks: findAllExtrema([-1, -2]),
     findAllValleys: findAllExtrema([1, 2])
   };
