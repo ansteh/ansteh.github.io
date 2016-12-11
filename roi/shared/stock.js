@@ -68,11 +68,13 @@ var Stock = function(info) {
   var filteredData = data;
 
   //test
-  data = compress('week');
+  // data = compress('week');
+  data = _.take(compress('week'), 20);
   filteredData = data;
 
   // console.log(Detection(peakFunction, { h: 1.1 , k: 2 }, getPrice, filteredData));
   // console.log(Interior.findAllPeaks(_.map(filteredData, 'close')));
+  console.log(Trends(getPrice, filteredData));
 
   var optimum = setOptimum();
   // console.log(data);

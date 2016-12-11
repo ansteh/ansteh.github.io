@@ -47,11 +47,30 @@ var Interior = (function() {
         }
       }
       if(index === series.length-1) {
-        if(index-1 > -1 && series[index-1] > value) {
+        if(index-1 > -1 && value > series[index-1]) {
           indices.push(index);
         }
       }
-      if(series[index-1] < value > series[index+1]) {
+      if(series[index-1] < value && value > series[index+1]) {
+        indices.push(index);
+      }
+      return indices;
+    }, []);
+  };
+
+  var findAllValleysByCompare = function(series) {
+    return _.reduce(series, function(indices, value, index) {
+      if(index === 0) {
+        if(index+1 < series.length && value < series[index+1]) {
+          indices.push(index);
+        }
+      }
+      if(index === series.length-1) {
+        if(index-1 > -1 && value < series[index-1]) {
+          indices.push(index);
+        }
+      }
+      if(series[index-1] > value && value < series[index+1]) {
         indices.push(index);
       }
       return indices;
@@ -59,12 +78,14 @@ var Interior = (function() {
   };
 
   return {
-    // findAllPeaks: findAllPeaksByCompare,
-    findAllPeaks: findAllExtrema([-1, -2]),
-    findAllValleys: findAllExtrema([1, 2])
+    findAllPeaks: findAllPeaksByCompare,
+    findAllValleys: findAllValleysByCompare
+    // findAllPeaks: findAllExtrema([-1, -2]),
+    // findAllValleys: findAllExtrema([1, 2])
   };
 }());
 
-console.log(Interior.findAllPeaks([2.3, 2, 2.5, 2.7, 2.4, 2, 1.7, 4, 3.9, 4, 3.5, 3.3, 4]));
+// console.log(Interior.findAllPeaks([2.3, 2, 2.5, 2.7, 2.4, 2, 1.7, 4, 3.9, 4, 3.5, 3.3, 4]));
 // console.log(Interior.findAllValleys([2.3, 2,2.5,2.7,2.4,2,1.7,4,3.9,4,3.5,3.3,4]));
-// console.log(Interior.findAllPeaks([1, 1, 1, 1, 1]));
+console.log('Interior.findAllPeaks', Interior.findAllPeaks([1, 2, 1, 2, 1]));
+console.log('Interior.findAllPeaks', Interior.findAllValleys([1, 2, 1, 2, 1]));
