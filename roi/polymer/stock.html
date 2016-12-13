@@ -5,6 +5,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.12/d3.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/metrics-graphics/2.9.0/metricsgraphics.min.js"></script>
 
+<script src="../shared/max-diff.js"></script>
+<script src="../shared/cost-everage.js"></script>
+<script src="../shared/peaks.js"></script>
+<script src="../shared/timeseries-interior-maxima.js"></script>
+<script src="../shared/trend.js"></script>
+<script src="../shared/datepress.js"></script>
 <script src="../shared/chart.js"></script>
 <script src="../shared/stock.js"></script>
 
@@ -50,9 +56,9 @@
       stock: undefined,
       investment: 1000,
       update: function() {
-        console.log(this.ajaxResponse);
         this.stock = Stock(this.ajaxResponse);
-        Graphics.stock(this.$.stock, this.stock);
+        this.chart = Graphics.stock(this.$.stock, this.stock);
+        this.chart.plot();
         this.amount = this.stock.getAmount(this.investment);
         this.cash = this.stock.getCash(this.investment);
         this.roi = _.round(this.stock.getROI(this.investment), 2);
