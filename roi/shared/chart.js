@@ -1,3 +1,24 @@
+MG.add_hook('global.before_init', function(args) {
+    console.log("About to initialize a chart");
+});
+
+MG.add_hook('line.after_init', function(chart) {
+  var args = chart.args;
+  console.log(chart);
+
+  if(args.plot_rising_trends) {
+    console.log('plot_rising_trends!', args.plot_rising_trends);
+    var svg = d3.select(args.target).select('svg');
+    // var line = svg.append("line")
+    //   .attr("x1", 5)
+    //   .attr("y1", 5)
+    //   .attr("x2", 50)
+    //   .attr("y2", 50)
+    //   .attr("stroke-width", 2)
+    //   .attr("stroke", "black");
+  }
+});
+
 var Graphics = {};
 
 Graphics.stock = function(anchor, stock){
@@ -36,7 +57,8 @@ Graphics.stock = function(anchor, stock){
       x_accessor: 'date',
       y_accessor: 'close',
       markers: markers,
-      min_y: min_y
+      min_y: min_y,
+      plot_rising_trends: [_.first(data), _.last(data)]
     });
   };
 
