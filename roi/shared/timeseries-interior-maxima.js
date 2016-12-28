@@ -87,5 +87,5 @@ var Interior = (function() {
 
 // console.log(Interior.findAllPeaks([2.3, 2, 2.5, 2.7, 2.4, 2, 1.7, 4, 3.9, 4, 3.5, 3.3, 4]));
 // console.log(Interior.findAllValleys([2.3, 2,2.5,2.7,2.4,2,1.7,4,3.9,4,3.5,3.3,4]));
-console.log('Interior.findAllPeaks', Interior.findAllPeaks([1, 2, 1, 2, 1]));
-console.log('Interior.findAllPeaks', Interior.findAllValleys([1, 2, 1, 2, 1]));
+// console.log('Interior.findAllPeaks', Interior.findAllPeaks([1, 2, 1, 2, 1]));
+// console.log('Interior.findAllPeaks', Interior.findAllValleys([1, 2, 1, 2, 1]));

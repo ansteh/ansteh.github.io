@@ -65,6 +65,6 @@ var Detection = _.curry(function(produce, options, getValue, series) {
 //   return x;
 // }, 10, 4, [1,2,3,4,5,6,5,4,3,2,1]));
 
-console.log(Detection(peakFunction, { k: 5, h: 1.1 }, function(x) {
-  return x;
-}, [1,2,3,4,5,20,5,4,3,2,1]));
+// console.log(Detection(peakFunction, { k: 5, h: 1.1 }, function(x) {
+//   return x;
+// }, [1,2,3,4,5,20,5,4,3,2,1]));

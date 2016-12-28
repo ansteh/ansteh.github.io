@@ -8,7 +8,7 @@ var Trends = _.curry(function(getValue, series) {
   var valleyIndices = Interior.findAllValleys(values);
   var valleyValues = _.map(valleyIndices, function(index) { return values[index]; });
 
-  console.log(valleyValues);
+  // console.log(valleyValues);
 
   var aggragetUpperTrends = function() {
     var trend = [];

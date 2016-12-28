@@ -1,19 +1,30 @@
 MG.add_hook('global.before_init', function(args) {
-    console.log("About to initialize a chart");
+    // console.log("About to initialize a chart");
 });
 
-function xPosition(args, index) {
-  return function (data) {
-    return args.scales.X(data[args.x_accessor][index]);
-  };
+function xPosition(args, index, series) {
+  series = series || 0;
+  if(_.has(args, 'data.'+series+'.'+index)) {
+    var data = args.data[series][index];
+    return args.scales.X(data[args.x_accessor]);
+  }
+}
+
+function yPosition(args, index, series) {
+  series = series || 0;
+  if(_.has(args, 'data.'+series+'.'+index)) {
+    var data = args.data[series][index];
+    return args.scales.Y(data[args.y_accessor]);
+  }
 }
 
 MG.add_hook('line.after_init', function(chart) {
   var args = chart.args;
-  console.log(chart);
+  console.log('chart', chart);
 
   if(args.plot_rising_trends) {
-    console.log(xPosition(args, 0));
+    console.log(xPosition(args, 0, 0));
+    console.log(yPosition(args, 0, 0));
     // console.log('plot_rising_trends!', args.plot_rising_trends);
     var svg = d3.select(args.target).select('svg');
     // console.log(svg.selectAll("path"));
