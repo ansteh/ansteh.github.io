@@ -23,6 +23,22 @@ app.factory('Request', function($http) {
 });
 
 app.factory('PromiseStorageService', function(localStorageService) {
+  var dayInMilliSeconds = 1000 * 60 * 60 * 24;
+
+  if(localStorageService.isSupported) {
+    var expireDate = localStorageService.get('expire_date');
+    if(expireDate) {
+      var date = new Date(expireDate);
+      var now = new Date();
+      if(now-date > dayInMilliSeconds) {
+        localStorageService.clearAll();
+        localStorageService.set('expire_date', new Date());
+      }
+    } else {
+      localStorageService.clearAll();
+      localStorageService.set('expire_date', new Date());
+    }
+  }
 
   var cache = function(key, promise) {
     return new Promise(function(resolve, reject) {
