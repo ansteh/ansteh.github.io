@@ -18,25 +18,53 @@ function yPosition(args, index, series) {
   }
 }
 
+function getPosition(args, point) {
+  return {
+    x: args.scales.X(point[args.x_accessor]),
+    y: args.scales.Y(point[args.y_accessor])
+  };
+}
+
 MG.add_hook('line.after_init', function(chart) {
   var args = chart.args;
-  console.log('chart', chart);
+  // console.log('chart', chart);
+  // console.log('args', args);
 
   if(args.plot_rising_trends) {
-    console.log(xPosition(args, 0, 0));
-    console.log(yPosition(args, 0, 0));
+    // console.log(xPosition(args, 0, 0));
+    // console.log(yPosition(args, 0, 0));
     // console.log('plot_rising_trends!', args.plot_rising_trends);
+
+    var start = getPosition(args, _.first(args.plot_rising_trends));
+    var end = getPosition(args, _.last(args.plot_rising_trends));
+
     var svg = d3.select(args.target).select('svg');
     // console.log(svg.selectAll("path"));
-    // var line = svg.select('.mg-line1');
+    var line = svg.select('.mg-line1');
     // console.log('line', line.attr("x1", 5)[0][0]);
-    // var line = svg.append("line")
-    //   .attr("x1", 5)
-    //   .attr("y1", 5)
-    //   .attr("x2", 50)
-    //   .attr("y2", 50)
-    //   .attr("stroke-width", 2)
-    //   .attr("stroke", "black");
+    var line = svg.append("line")
+      .attr("x1", start.x)
+      .attr("y1", start.y)
+      .attr("x2", end.x)
+      .attr("y2", end.y)
+      .attr("stroke-width", 1)
+      .attr("stroke", "black");
+
+    // if(_.has(args, 'trends.upper')) {
+    //   _.forEach(args.trends.upper, function(trend) {
+    //     console.log(trend);
+    //     var start = getPosition(args, _.first(trend));
+    //     var end = getPosition(args, _.last(trend));
+    //
+    //     var line = svg.append("line")
+    //       .attr("x1", start.x)
+    //       .attr("y1", start.y)
+    //       .attr("x2", end.x)
+    //       .attr("y2", end.y)
+    //       .attr("stroke-width", 1)
+    //       .attr("stroke", "red");
+    //   });
+    // }
   }
 });
 
@@ -79,7 +107,8 @@ Graphics.stock = function(anchor, stock){
       y_accessor: 'close',
       //markers: markers,
       min_y: min_y,
-      plot_rising_trends: [_.first(data), _.last(data)]
+      plot_rising_trends: [_.first(data), _.last(data)],
+      trends: stock.getTrends()
     });
   };
 

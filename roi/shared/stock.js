@@ -74,7 +74,7 @@ var Stock = function(info) {
 
   // console.log(Detection(peakFunction, { h: 1.1 , k: 2 }, getPrice, filteredData));
   // console.log(Interior.findAllPeaks(_.map(filteredData, 'close')));
-  console.log(Trends(getPrice, filteredData));
+  // console.log(Trends(getPrice, filteredData));
 
   var optimum = setOptimum();
   // console.log(data);
@@ -89,6 +89,9 @@ var Stock = function(info) {
     getAmount: getAmount,
     getEnd: getEnd,
     getStart: getStart,
+    getTrends: function() {
+      return Trends(getPrice, filteredData);
+    },
     getOptimum: function() {
       return optimum;
     },
