@@ -63,8 +63,14 @@ MG.add_hook('line.after_init', function(chart) {
     // console.log(svg.selectAll("path"));
     var line = svg.select('.mg-line1');
     // console.log('line', line.attr("x1", 5)[0][0]);
+
     //http://bl.ocks.org/d3noob/5d621a60e2d1d02086bf
     // line.style("opacity", 0);
+    if(args.only_trends) {
+      line.style("opacity", 0);
+    } else {
+      line.style("opacity", 1);
+    }
 
     svg.selectAll(".trend").remove();
 
@@ -77,7 +83,7 @@ MG.add_hook('line.after_init', function(chart) {
     //   .attr("stroke-width", 1)
     //   .attr("stroke", "black");
 
-    console.log(args.trends);
+    // console.log(args.trends);
 
     drawTrends('upper', args, function(start, end) {
       drawLine(svg, 'green', start, end);
@@ -93,7 +99,7 @@ var Graphics = {};
 
 Graphics.stock = function(anchor, stock){
 
-  var plot = function(start, end, delimiter) {
+  var plot = function(start, end, delimiter, onlyTrends) {
     var data = stock.filter(start, end);
 
     var markers = [];
@@ -129,7 +135,8 @@ Graphics.stock = function(anchor, stock){
       //markers: markers,
       min_y: min_y,
       plot_rising_trends: [_.first(data), _.last(data)],
-      trends: stock.getTrends()
+      trends: stock.getTrends(),
+      only_trends: onlyTrends
     });
   };
 

@@ -46,7 +46,7 @@ app.controller('StockCtrl', function($scope, $element, Quandl) {
   };
 
   $scope.filter = function() {
-    chart.plot($scope.boundries.start, $scope.boundries.end, 'month');
+    chart.plot($scope.boundries.start, $scope.boundries.end, 'month', $scope.onlyTrends);
     $scope.optimum = stock.getOptimum();
   };
 
