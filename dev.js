@@ -6,6 +6,7 @@ const path           = require('path');
 const fs             = require('fs');
 
 app.use('/client', express.static(path.join(__dirname, '/client')));
+app.use('/resources', express.static(path.join(__dirname, '/resources')));
 app.use('/roi', express.static(path.join(__dirname, '/roi')));
 app.use('/bower_components', express.static(path.join(__dirname, '/bower_components')));
 

@@ -1,4 +1,12 @@
-app.controller('StockCtrl', function($scope, $element, Quandl) {
+app.controller('StockCtrl', function($scope, $element, Quandl, QuandlLists) {
+  QuandlLists.getSP500()
+  .then(function(res) {
+    console.log(res);
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+
   var stock, chart;
   $scope.companies = ['FB', 'GOOG', 'MSFT'];
   $scope.company = _.first($scope.companies);
