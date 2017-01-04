@@ -126,7 +126,7 @@ Graphics.stock = function(anchor, stock){
       // data: [data, stock.compress('month'), stock.compress('year')],
       data: data,
       animate_on_load: true,
-      y_scale_type: 'log',
+      // y_scale_type: 'log',
       area: false,
       full_width: true,
       target: anchor,

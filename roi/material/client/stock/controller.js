@@ -1,6 +1,9 @@
 app.controller('StockCtrl', function($scope, $element, Quandl, QuandlLists) {
 
   $scope.SP500 = [];
+  $scope.createWikiUrl = function(meta) {
+    return meta ? Quandl.createWikiUrl(meta) : "";
+  };
 
   QuandlLists.getSP500()
   .then(function(SP500) {
@@ -102,4 +105,9 @@ app.controller('StockCtrl', function($scope, $element, Quandl, QuandlLists) {
   }
 
   $scope.update();
+
+  $scope.attach = function() {
+    $scope.company = _.get($scope.selectedItem, 'ticker');
+    if($scope.company) $scope.update()
+  }
 });
