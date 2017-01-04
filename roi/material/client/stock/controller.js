@@ -1,11 +1,22 @@
 app.controller('StockCtrl', function($scope, $element, Quandl, QuandlLists) {
+
+  $scope.SP500 = [];
+
   QuandlLists.getSP500()
-  .then(function(res) {
-    console.log(res);
+  .then(function(SP500) {
+    // console.log(SP500);
+    $scope.SP500 = SP500;
   })
   .catch(function(err) {
     console.log(err);
   });
+
+  $scope.searchStock = function() {
+    var needle = _.toLower($scope.searchText);
+    return _.filter($scope.SP500, function(candidate) {
+      return _.includes(_.toLower(candidate.name), needle);
+    });
+  }
 
   var stock, chart;
   $scope.companies = ['FB', 'GOOG', 'MSFT'];

@@ -1,3 +1,14 @@
+<md-autocomplete md-selected-item="selectedItem" md-search-text="searchText" md-items="item in searchStock()" md-item-text="item.name" style="margin-top: 16px; margin-bottom: 16px;">
+  <md-item-template>
+    <div layout="row">
+      <div md-highlight-text="searchText" style="width: 50px;">{{ item.ticker }}</div>
+      <div md-highlight-text="searchText"flex>{{ item.name }}</div>
+    </div>
+  </md-item-template>
+</md-autocomplete>
+
+<pre>{{ selectedItem | json }}</pre>
+
 <h1 class="md-title" style="text-align: center;">{{ getName() }}</h1>
 <div id="stock" style="width: 100%; height-min: 100px;"></div>
 <div id="batched" style="width: 100%; height-min: 100px;"></div>

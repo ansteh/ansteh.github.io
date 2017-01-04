@@ -38,10 +38,11 @@ app.factory('QuandlLists', function($http, Request, PromiseStorageService) {
 
   function getSP500(){
     // var url = createWikiUrl({ name: _.toUpper(name) });
-    // return PromiseStorageService.cache(url, function() {
-      return Request.get('/resources/SP500.csv')
+    var url = '/resources/SP500.csv';
+    return PromiseStorageService.cache(url, function() {
+      return Request.get(url)
         .then(jsonCSV);
-    // });
+    });
   };
 
   return {
