@@ -1,8 +1,8 @@
 app.controller('StockCtrl', function($scope, $element, Quandl, QuandlLists) {
 
   $scope.SP500 = [];
-  $scope.createWikiUrl = function(meta) {
-    return meta ? Quandl.createWikiUrl(meta) : "";
+  $scope.createWikiUrl = function(stock) {
+    return stock ? Quandl.createWikiUrl(stock) : "";
   };
 
   QuandlLists.getSP500()
@@ -22,8 +22,12 @@ app.controller('StockCtrl', function($scope, $element, Quandl, QuandlLists) {
   }
 
   var stock, chart;
-  $scope.companies = ['FB', 'GOOG', 'MSFT'];
-  $scope.company = _.first($scope.companies);
+  $scope.stock = {
+    "ticker": "FB",
+    "name": "Facebook",
+    "free_code": "WIKI/FB",
+    "premium_code": "EOD/FB"
+  };
   $scope.optimum;
   $scope.investment = 1000;
   $scope.cost;
@@ -79,7 +83,7 @@ app.controller('StockCtrl', function($scope, $element, Quandl, QuandlLists) {
   };
 
   $scope.update = function() {
-    Quandl.get($scope.company)
+    Quandl.get($scope.stock)
     .then(function(response) {
       stock = Stock(response);
       chart = Graphics.stock($element.find('#stock')[0], stock);
@@ -87,7 +91,6 @@ app.controller('StockCtrl', function($scope, $element, Quandl, QuandlLists) {
       // chart.batch('month');
 
       $scope.optimum = stock.getOptimum();
-
       $scope.start = stock.getStart();
       $scope.end = stock.getEnd();
 
@@ -107,7 +110,6 @@ app.controller('StockCtrl', function($scope, $element, Quandl, QuandlLists) {
   $scope.update();
 
   $scope.attach = function() {
-    $scope.company = _.get($scope.selectedItem, 'ticker');
-    if($scope.company) $scope.update()
+    if($scope.stock) $scope.update();
   }
 });

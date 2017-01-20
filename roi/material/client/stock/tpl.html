@@ -1,4 +1,4 @@
-<md-autocomplete md-selected-item-change="attach()" md-selected-item="selectedItem" md-search-text="searchText" md-items="item in searchStock()" md-item-text="item.name" style="margin-top: 16px; margin-bottom: 16px;">
+<md-autocomplete md-selected-item-change="attach()" md-selected-item="stock" md-search-text="searchText" md-items="item in searchStock()" md-item-text="item.name" style="margin-top: 16px; margin-bottom: 16px;">
   <md-item-template>
     <div layout="row">
       <div md-highlight-text="searchText" style="width: 50px;">{{ item.ticker }}</div>
@@ -7,10 +7,10 @@
   </md-item-template>
 </md-autocomplete>
 
-<pre>{{ selectedItem | json }}</pre>
+<pre>{{ stock | json }}</pre>
 
 <md-button ng-show="selectedItem" style="text-transform: initial;">
-  {{ createWikiUrl(selectedItem) }}
+  {{ createWikiUrl(stock) }}
 </md-button>
 
 <!-- <div>{{ createWikiUrl(selectedItem) }}</div> -->
@@ -20,7 +20,7 @@
 <div id="batched" style="width: 100%; height-min: 100px;"></div>
 
 
-<section layout="row" layout-sm="column" layout-align="center" layout-wrap>
+<!-- <section layout="row" layout-sm="column" layout-align="center" layout-wrap>
   <md-input-container class="md-block" flex>
     <label>Company</label>
     <md-select ng-model="company" ng-change="update()">
@@ -29,7 +29,7 @@
       </md-option>
     </md-select>
   </md-input-container>
-</section>
+</section> -->
 
 <md-input-container class="md-block" flex>
   <md-switch ng-model="onlyTrends" ng-change="filter()">Trends</md-switch>
