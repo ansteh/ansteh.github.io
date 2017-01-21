@@ -7,18 +7,16 @@
   </md-item-template>
 </md-autocomplete>
 
-<pre>{{ stock | json }}</pre>
+<!-- <pre>{{ stock | json }}</pre>
 
 <md-button ng-show="selectedItem" style="text-transform: initial;">
   {{ createWikiUrl(stock) }}
-</md-button>
+</md-button> -->
 
 <!-- <div>{{ createWikiUrl(selectedItem) }}</div> -->
 
 <h1 class="md-title" style="text-align: center;">{{ getName() }}</h1>
 <div id="stock" style="width: 100%; height-min: 100px;"></div>
-<div id="batched" style="width: 100%; height-min: 100px;"></div>
-
 
 <!-- <section layout="row" layout-sm="column" layout-align="center" layout-wrap>
   <md-input-container class="md-block" flex>
@@ -31,9 +29,9 @@
   </md-input-container>
 </section> -->
 
-<md-input-container class="md-block" flex>
+<!-- <md-input-container class="md-block" flex>
   <md-switch ng-model="onlyTrends" ng-change="filter()">Trends</md-switch>
-</md-input-container>
+</md-input-container> -->
 
 <div ng-cloak>
   <md-content layout-padding>

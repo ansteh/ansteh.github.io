@@ -96,7 +96,6 @@ var Stock = function(info) {
 
   var filteredData = data;
 
-  // console.log('proposedDelimiter:', proposeDelimiter(filteredData));
   data = compress(proposeDelimiter(filteredData) || 'year');
   // data = _.take(compress('week'), 20);
   filteredData = data;
