@@ -52,46 +52,45 @@ MG.add_hook('line.after_init', function(chart) {
   // console.log('args', args);
 
   if(args.plot_rising_trends) {
-    // console.log(xPosition(args, 0, 0));
-    // console.log(yPosition(args, 0, 0));
-    // console.log('plot_rising_trends!', args.plot_rising_trends);
-
-    var start = getPosition(args, _.first(args.plot_rising_trends));
-    var end = getPosition(args, _.last(args.plot_rising_trends));
-
     var svg = d3.select(args.target).select('svg');
+    svg.selectAll(".trend").remove();
+
     // console.log(svg.selectAll("path"));
     var line = svg.select('.mg-line1');
     // console.log('line', line.attr("x1", 5)[0][0]);
 
     //http://bl.ocks.org/d3noob/5d621a60e2d1d02086bf
-    // line.style("opacity", 0);
+    console.log(args.only_trends);
     if(args.only_trends) {
       line.style("opacity", 0);
+      // console.log(xPosition(args, 0, 0));
+      // console.log(yPosition(args, 0, 0));
+      // console.log('plot_rising_trends!', args.plot_rising_trends);
+
+      var start = getPosition(args, _.first(args.plot_rising_trends));
+      var end = getPosition(args, _.last(args.plot_rising_trends));
+
+      // var line = svg.append("line")
+      //   .attr("x1", start.x)
+      //   .attr("y1", start.y)
+      //   .attr("x2", end.x)
+      //   .attr("y2", end.y)
+      //   .attr("class", "trend")
+      //   .attr("stroke-width", 1)
+      //   .attr("stroke", "black");
+
+      // console.log(args.trends);
+
+      drawTrends('upper', args, function(start, end) {
+        drawLine(svg, 'green', start, end);
+      });
+
+      drawTrends('down', args, function(start, end) {
+        drawLine(svg, 'red', start, end);
+      });
     } else {
       line.style("opacity", 1);
     }
-
-    svg.selectAll(".trend").remove();
-
-    // var line = svg.append("line")
-    //   .attr("x1", start.x)
-    //   .attr("y1", start.y)
-    //   .attr("x2", end.x)
-    //   .attr("y2", end.y)
-    //   .attr("class", "trend")
-    //   .attr("stroke-width", 1)
-    //   .attr("stroke", "black");
-
-    // console.log(args.trends);
-
-    drawTrends('upper', args, function(start, end) {
-      drawLine(svg, 'green', start, end);
-    });
-
-    drawTrends('down', args, function(start, end) {
-      drawLine(svg, 'red', start, end);
-    });
   }
 });
 
