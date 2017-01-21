@@ -50,7 +50,7 @@ var Stock = function(info) {
     var batches = DP.batch(data, delimiter, access);
     var info = costEverage(batches, investment);
     info.delimiter = delimiter;
-    return info
+    return info;
   };
 
   var series = _.chain(_.get(info, 'dataset.data', []))
@@ -64,10 +64,40 @@ var Stock = function(info) {
     }
   });
 
+  var millisecondsInDay = 86400000;
+  var millisecondsInWeek = 86400000*7;
+  var millisecondsInMonth = 86400000*30;
+
+  var delimiterMarks = [{
+    delimiter: 'date',
+    duration: millisecondsInDay
+  },{
+    delimiter: 'week',
+    duration: millisecondsInWeek
+  },{
+    delimiter: 'month',
+    duration: millisecondsInMonth
+  }];
+
+  function proposeDelimiter(data, maxPointCount) {
+    maxPointCount = maxPointCount || 400;
+
+    var start = _.get(_.first(data), 'date');
+    var end = _.get(_.last(data), 'date');
+    var difference = end.valueOf()-start.valueOf();
+
+    return _.chain(delimiterMarks)
+    .find(function(mark) {
+      return difference/mark.duration <= maxPointCount;
+    })
+    .get('delimiter')
+    .value();
+  }
 
   var filteredData = data;
 
-  data = compress('week');
+  // console.log('proposedDelimiter:', proposeDelimiter(filteredData));
+  data = compress(proposeDelimiter(filteredData) || 'year');
   // data = _.take(compress('week'), 20);
   filteredData = data;
   var optimum = setOptimum();
