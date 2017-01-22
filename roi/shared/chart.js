@@ -176,3 +176,22 @@ Graphics.everageCost = function(anchor) {
     plot: plot
   };
 };
+
+Graphics.line = function(anchor) {
+  function plot(data, options) {
+    options = options || {};
+    MG.data_graphic(_.assign({
+      target: anchor,
+      data: data,
+      animate_on_load: true,
+      area: false,
+      full_width: true,
+      x_accessor: 'date',
+      y_accessor: 'value'
+    }, options));
+  };
+
+  return {
+    plot: plot
+  };
+};

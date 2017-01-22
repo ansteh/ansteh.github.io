@@ -13,9 +13,13 @@ Cost.accumulate = function(transactions, keys) {
         _.set(transaction, totalKey, previous[totalKey]+transaction[key]);
       });
     }
-    transaction.profit = transaction.price*transaction.totalshares/transaction.totalinvestment;
+
+    transaction.portfolio = transaction.price*transaction.totalshares;
+
+    transaction.profit = transaction.portfolio/transaction.totalinvestment;
     transaction.profit -= 1;
     transaction.profit *= 100;
+
     return transaction;
   });
 };

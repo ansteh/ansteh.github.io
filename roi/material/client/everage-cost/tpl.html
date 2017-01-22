@@ -1,4 +1,4 @@
-<!-- <div id="everage-cost" style="width: 100%; height-min: 100px;"></div> -->
+<div id="profit" style="width: 100%; height-min: 100px;"></div>
 
 <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" style="margin-bottom: 32px;">
   <thead>
@@ -8,6 +8,7 @@
       <th>Total Shares</th>
       <th>Investment $</th>
       <th>Total Investment $</th>
+      <th>Value $</th>
       <th>Profit %</th>
     </tr>
   </thead>
@@ -18,9 +19,10 @@
       <td>{{ transaction.totalshares }}</td>
       <td>{{ transaction.investment | number:2 }}</td>
       <td>{{ transaction.totalinvestment | number:2 }}</td>
+      <td>{{ transaction.portfolio | number:2 }}</td>
       <td>{{ transaction.profit | number:2 }}</td>
     </tr>
   </tbody>
 </table>
 
-<!-- <pre>{{ info | json }}</pre> -->
+<pre>{{ info | json }}</pre>
