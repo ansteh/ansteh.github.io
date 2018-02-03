@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 export class StockPricesChartComponent implements OnInit, OnChanges {
   @ViewChild('chart') canvas: ElementRef;
 
+  @Input() label: string;
   @Input() data: any[];
 
   public labels: any[] = [];
@@ -32,7 +33,7 @@ export class StockPricesChartComponent implements OnInit, OnChanges {
 			data: {
 				labels: this.labels,
 				datasets: [{
-					label: "CHRT - Chart.js Corporation",
+					label: 'close',
 					data: this.closes,
 					type: 'line',
 					pointRadius: 0,
@@ -85,7 +86,7 @@ export class StockPricesChartComponent implements OnInit, OnChanges {
     this.chart.data = _.cloneDeep({
       labels: this.labels,
       datasets: [{
-        label: "CHRT - Chart.js Corporation",
+        label: this.label,
         data: this.closes,
         type: 'line',
         pointRadius: 0,

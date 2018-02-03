@@ -23,13 +23,15 @@ import { appRoutes } from './app.routes';
 import { StockComponent } from './stock/stock.component';
 import { StockMetricChartComponent } from './stock/stock-metric-chart/stock-metric-chart.component';
 import { StockPricesChartComponent } from './stock/stock-prices-chart/stock-prices-chart.component';
+import { DividendsComponent } from './stock/dividends/dividends.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     StockComponent,
     StockMetricChartComponent,
-    StockPricesChartComponent
+    StockPricesChartComponent,
+    DividendsComponent
   ],
   imports: [
     BrowserModule,

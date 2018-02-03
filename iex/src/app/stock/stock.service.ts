@@ -27,11 +27,13 @@ export class StockService {
     return this.http.get(`https://api.iextrading.com/1.0/stock/${ticker}/earnings`)
       .map(res => res.json())
       .map(data => _.get(data, 'earnings'))
+      .map(_.reverse)
   }
 
   getDividends(ticker: string): Observable<any> {
     return this.http.get(`https://api.iextrading.com/1.0/stock/${ticker}/dividends/5y`)
       .map(res => res.json())
+      .map(_.reverse)
   }
 
 }

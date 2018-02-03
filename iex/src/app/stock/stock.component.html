@@ -3,6 +3,7 @@
 <!-- <pre>{{ historical | json }}</pre> -->
 <!-- <pre>{{ earnings | json }}</pre> -->
 
-<sec-stock-prices-chart [data]="historical"></sec-stock-prices-chart>
+<sec-stock-prices-chart [label]="company?.companyName" [data]="historical"></sec-stock-prices-chart>
+<!-- <iex-dividends [dividends]="dividends"></iex-dividends> -->
 <stock-metric-chart [label]="'dividends'" [data]="dividendsChartData"></stock-metric-chart>
 <stock-metric-chart [label]="'earnings'" [data]="earningsChartData"></stock-metric-chart>

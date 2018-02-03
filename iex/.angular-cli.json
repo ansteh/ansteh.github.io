@@ -22,7 +22,8 @@
         "styles.css"
       ],
       "scripts": [
-        "../node_modules/chart.js/dist/Chart.js"
+        "../node_modules/chart.js/dist/Chart.js",
+        "../node_modules/moment/min/moment.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
