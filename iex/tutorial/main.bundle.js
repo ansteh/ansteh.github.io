@@ -281,7 +281,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_4__angular_http__["a" /* HttpModule */],
             __WEBPACK_IMPORTED_MODULE_6__angular_flex_layout__["a" /* FlexLayoutModule */],
-            __WEBPACK_IMPORTED_MODULE_5__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_11__app_routes__["a" /* appRoutes */], { useHash: true }),
+            __WEBPACK_IMPORTED_MODULE_5__angular_router__["a" /* RouterModule */].forRoot(__WEBPACK_IMPORTED_MODULE_11__app_routes__["a" /* appRoutes */]),
             __WEBPACK_IMPORTED_MODULE_7__angular_material__["a" /* MatInputModule */],
             __WEBPACK_IMPORTED_MODULE_7__angular_material__["b" /* MatFormFieldModule */],
             __WEBPACK_IMPORTED_MODULE_7__angular_material__["c" /* MatTableModule */],

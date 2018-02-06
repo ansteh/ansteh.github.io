@@ -40,7 +40,7 @@ import { DividendsComponent } from './stock/dividends/dividends.component';
     HttpModule,
     FlexLayoutModule,
 
-    RouterModule.forRoot(appRoutes, { useHash: true }),//{ enableTracing: true }
+    RouterModule.forRoot(appRoutes),//{ enableTracing: true }
 
     MatInputModule,
     MatFormFieldModule,
